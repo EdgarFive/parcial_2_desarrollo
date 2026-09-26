@@ -1,3 +1,11 @@
+Edgar Chinchilla - Puntos que se hicieron.
+
+Punto 3 = Indicador de fuerza de contraseña
+
+Punto 8 = Copiar al portapapeles.
+
+
+
 # Sistema Oficina de Agua
 
 Sistema web para digitalizar el control de una oficina comunitaria de agua potable: mantenimiento de tarifas, control de clientes, registro de lecturas de contadores casa por casa, cálculo automático de consumo y cobro, generación de recibo imprimible, control de pagos en oficina y un dashboard de estado de cuenta de clientes.
