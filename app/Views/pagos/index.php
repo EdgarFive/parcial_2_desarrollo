@@ -77,7 +77,20 @@
             <tbody>
                 <?php foreach ($pagos as $pago): ?>
                     <tr>
-                        <td><?= esc($pago['numero_recibo']) ?></td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <span><?= esc($pago['numero_recibo']) ?></span>
+
+                                <?php if (!empty($pago['numero_recibo'])): ?>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-secondary btn-sm btn-copiar"
+                                        data-texto="<?= esc($pago['numero_recibo'], 'attr') ?>">
+                                        Copiar
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+                        </td>
                         <td><?= esc($pago['fecha_pago']) ?></td>
                         <td><?= esc($pago['cliente']) ?></td>
                         <td><?= esc($pago['numero_registro']) ?></td>
@@ -156,5 +169,44 @@
 </div>
 <?= $this->endSection() ?>
 <?= $this->section('scripts') ?>
+
 <script src="<?= base_url('assets/js/datatables-simple-demo.js') ?>"></script>
+
+<script>
+document.addEventListener('click', async function (event) {
+
+    const boton = event.target.closest('.btn-copiar');
+
+    if (!boton) {
+        return;
+    }
+
+    const texto = boton.dataset.texto;
+    const textoOriginal = boton.textContent;
+
+    try {
+
+        await navigator.clipboard.writeText(texto);
+
+        boton.textContent = '¡Copiado!';
+        boton.disabled = true;
+
+        setTimeout(function () {
+            boton.textContent = textoOriginal;
+            boton.disabled = false;
+        }, 1500);
+
+    } catch (error) {
+
+        boton.textContent = 'Error al copiar';
+
+        setTimeout(function () {
+            boton.textContent = textoOriginal;
+        }, 1500);
+
+    }
+
+});
+</script>
+
 <?= $this->endSection() ?>

@@ -68,7 +68,20 @@
                             </td>
 
                             <td>
-                                <?= esc($contador['numero_registro']) ?>
+                                <div class="d-flex align-items-center gap-2">
+
+                                    <span>
+                                        <?= esc($contador['numero_registro']) ?>
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-secondary btn-sm btn-copiar"
+                                        data-texto="<?= esc($contador['numero_registro'], 'attr') ?>">
+                                        Copiar
+                                    </button>
+
+                                </div>
                             </td>
 
                             <td>
@@ -180,5 +193,42 @@
 <?= $this->section('scripts') ?>
 
 <script src="<?= base_url('assets/js/datatables-simple-demo.js') ?>"></script>
+
+<script>
+document.addEventListener('click', async function (event) {
+
+    const boton = event.target.closest('.btn-copiar');
+
+    if (!boton) {
+        return;
+    }
+
+    const texto = boton.dataset.texto;
+    const textoOriginal = boton.textContent;
+
+    try {
+
+        await navigator.clipboard.writeText(texto);
+
+        boton.textContent = '¡Copiado!';
+        boton.disabled = true;
+
+        setTimeout(function () {
+            boton.textContent = textoOriginal;
+            boton.disabled = false;
+        }, 1500);
+
+    } catch (error) {
+
+        boton.textContent = 'Error al copiar';
+
+        setTimeout(function () {
+            boton.textContent = textoOriginal;
+        }, 1500);
+
+    }
+
+});
+</script>
 
 <?= $this->endSection() ?>
